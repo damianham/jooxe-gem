@@ -1,24 +1,26 @@
-Dir.glob('lib/jooxe/middleware/*.rb') do |f|
+path = File.expand_path(File.dirname(__FILE__) )
+
+Dir.glob("#{path}/middleware/*.rb") do |f|
   require f
 end
     
-Dir.glob('lib/jooxe/core/*.rb') do |f|
+Dir.glob("#{path}/core/*.rb") do |f|
   require f
 end
 
-Dir.glob('lib/jooxe/adapters/*.rb') do |f|
+Dir.glob("#{path}/adapters/*.rb") do |f|
   require f
 end
 
-Dir.glob('lib/jooxe/helpers/*.rb') do |f|
+Dir.glob("#{path}/helpers/*.rb") do |f|
   require f
 end
 
-Dir.glob('lib/jooxe/support/*.rb') do |f|
+Dir.glob("#{path}/support/*.rb") do |f|
   require f
 end
 
-Dir.glob('lib/jooxe/*.rb') do |f|
+Dir.glob("#{path}/*.rb") do |f|
   require f
 end
 

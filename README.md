@@ -111,7 +111,7 @@ mysql, postgresql, h2 etc.
 
 ## Jooxe web app
 
-See the example Jooxe web app at http://github.com/damianham/jooxe_app to get started.
+See the example Jooxe web app at http://github.com/damianham/jooxe_webapp to get started.
 
 
 ## Installation

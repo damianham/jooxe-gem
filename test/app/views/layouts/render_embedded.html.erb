@@ -1,0 +1,11 @@
+<%#
+# layout for render partial with embedded partial
+%>
+
+<%= "render_embedded.html layout" %>
+
+<%= render :partial => 'render_embedded_shared' %>
+
+here is the yield
+<%= yield :layout %>
+yield finished

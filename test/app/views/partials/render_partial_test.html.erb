@@ -1,0 +1,15 @@
+<%#
+# shared partial
+%>
+
+<%= "render_partial_test.html" %>
+
+<% if @instance %>
+  <%= "instance defined" %>
+<%= @instance.inspect %>
+<%  end %>
+
+<% if @collection %>
+  <%= "collection defined" %>
+<%= @collection.inspect %>
+<%  end %>

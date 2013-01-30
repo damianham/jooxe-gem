@@ -1,0 +1,20 @@
+<%#
+# template to render a user collection
+%>
+
+<%= "list.html  action template" %>
+
+<% instance = @collection[0] 
+keys = instance.columns.map {|field| field[0]}
+
+%>
+
+<table cellpadding="5" cellspacing="5">
+
+  <% @collection.each do |instance| %>
+    <tr>
+      <%= render :partial => 'list_user', :locals => {:instance => instance} %>
+    </tr>
+  <% end %>
+
+</table>

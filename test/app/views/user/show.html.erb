@@ -1,0 +1,44 @@
+<%#
+# template to render a user instance
+%>
+
+<%= "show.html action template" %>
+
+<table cellpadding="5" cellspacing="5">
+
+  <tr>
+    <th>
+      Account Name
+    </th>
+    <td>
+      <%= @instance.account_name %>
+    </td>
+  </tr>
+  <tr>
+    <th>
+       Name
+    </th>
+    <td>
+      <%= @instance.given_name %> <%= @instance.surname %>
+    </td>
+  </tr>
+  <tr>
+    <th>
+      country
+    </th>
+    <td>
+      <%= @instance.country %>
+    </td>
+  </tr>
+  <tr>
+    <th>
+      Mail
+    </th>
+    <td>
+      <%= @instance.mail %>
+    </td>
+  </tr>
+    
+  
+    
+</table>

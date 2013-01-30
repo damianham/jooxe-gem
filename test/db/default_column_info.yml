@@ -1,0 +1,157 @@
+---
+schema:
+  post:
+    columns:
+      id:
+        column_name: id
+        ordinal_position: 1
+        data_type: int
+        is_nullable: 'NO'
+        character_maximum_length: 
+        numeric_precision: 10
+        column_comment: ''
+      title:
+        column_name: name
+        ordinal_position: 2
+        data_type: varchar
+        is_nullable: 'NO'
+        character_maximum_length: 255
+        numeric_precision: 
+        column_comment: The title of the post
+      updated_at:
+        column_name: updated_at
+        ordinal_position: 6
+        data_type: timestamp
+        is_nullable: 'NO'
+        character_maximum_length: 
+        numeric_precision: 
+        column_comment: ''
+      updated_by:
+        column_name: updated_by
+        ordinal_position: 7
+        data_type: varchar
+        is_nullable: 'NO'
+        character_maximum_length: 255
+        numeric_precision: 
+        column_comment: ''
+    has_many:
+    - - comment
+    belongs_to:
+    - - user
+    comment: An original post
+  comment:
+    columns:
+      id:
+        column_name: id
+        ordinal_position: 1
+        data_type: int
+        is_nullable: 'NO'
+        character_maximum_length: 
+        numeric_precision: 10
+        column_comment: ''
+      body:
+        column_name: user_id
+        ordinal_position: 2
+        data_type: varchar
+        is_nullable: 'NO'
+        character_maximum_length: 255
+        numeric_precision: 
+        column_comment: the comment body
+      updated_at:
+        column_name: updated_at
+        ordinal_position: 6
+        data_type: timestamp
+        is_nullable: 'NO'
+        character_maximum_length: 
+        numeric_precision: 
+        column_comment: ''
+      updated_by:
+        column_name: updated_by
+        ordinal_position: 7
+        data_type: varchar
+        is_nullable: 'NO'
+        character_maximum_length: 255
+        numeric_precision: 
+        column_comment: ''
+    has_many: []
+    belongs_to:
+    - - post
+    comment: A comment on a post   
+  user:
+    columns:
+      id:
+        column_name: id
+        ordinal_position: 1
+        data_type: int
+        is_nullable: 'NO'
+        character_maximum_length: 
+        numeric_precision: 10
+        column_comment: ''
+      mail:
+        column_name: mail
+        ordinal_position: 5
+        data_type: varchar
+        is_nullable: 'NO'
+        character_maximum_length: 255
+        numeric_precision: 
+        column_comment: The email address of the user
+      account_name:
+        column_name: account_name
+        ordinal_position: 6
+        data_type: varchar
+        is_nullable: 'YES'
+        character_maximum_length: 64
+        numeric_precision: 
+        column_comment: The login name of the user 
+      title:
+        column_name: title
+        ordinal_position: 7
+        data_type: varchar
+        is_nullable: 'YES'
+        character_maximum_length: 64
+        numeric_precision: 
+        column_comment: The title of the user from title
+      given_name:
+        column_name: given_name
+        ordinal_position: 8
+        data_type: varchar
+        is_nullable: 'YES'
+        character_maximum_length: 64
+        numeric_precision: 
+        column_comment: The first name of the user 
+      surname:
+        column_name: sn
+        ordinal_position: 9
+        data_type: varchar
+        is_nullable: 'YES'
+        character_maximum_length: 64
+        numeric_precision: 
+        column_comment: The surname of the user 
+      country:
+        column_name: country
+        ordinal_position: 14
+        data_type: char
+        is_nullable: 'YES'
+        character_maximum_length: 2
+        numeric_precision: 
+        column_comment: The 2 letter ISO country code
+      updated_at:
+        column_name: updated_at
+        ordinal_position: 54
+        data_type: timestamp
+        is_nullable: 'NO'
+        character_maximum_length: 
+        numeric_precision: 
+        column_comment: ''
+      updated_by:
+        column_name: updated_by
+        ordinal_position: 55
+        data_type: varchar
+        is_nullable: 'NO'
+        character_maximum_length: 255
+        numeric_precision: 
+        column_comment: ''
+    has_many:
+    - - post
+    belongs_to: []
+    comment: User records 

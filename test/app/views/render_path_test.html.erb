@@ -1,0 +1,15 @@
+<%#
+file to render with render_path
+%>
+
+<%= "render_path_test" %>
+
+<% if @instance %>
+  <%= "instance defined" %>
+<%= @instance.inspect %>
+<%  end %>
+
+<% if @collection %>
+  <%= "collection defined" %>
+<%= @collection.inspect %>
+<%  end %>

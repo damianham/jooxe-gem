@@ -43,13 +43,14 @@ module Jooxe
       # decode path into class,id,action
       options = @router.route(env)
 
+      options[:layout] = 'application'
       env[:route_info] = options
-    
+      
       # if the router could not determine the controller class then display the 
       # homepage
       if options[:model_class_name].nil?
         # root URL
-        options[:layout] = 'application'
+        
         view = Jooxe::View.new(env)
         return [200, {"Content-Type" => "text/html"}, Rack::Response.new(view.render_path('root'))]
       end
@@ -64,6 +65,7 @@ module Jooxe
         @controller = options [:controller_class]
     
         view = @controller.send(action.to_sym)
+        
         response = Rack::Response.new(view.render(options))
         [response.status, response.headers, response.body]
       end

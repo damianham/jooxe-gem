@@ -34,7 +34,7 @@ module Jooxe
       # use the default database if no prefix given
       @database = $dbs[@database_name] || $dbs['default'] || {}
     
-      @route_info = Hash.new(:database => @database, :database_name => @database_name, :params => {})
+      @route_info = {:database => @database, :database_name => @database_name, :params => {}}
       
       while path_elements.length > 0
         
@@ -76,12 +76,12 @@ module Jooxe
 
         end
       
-        @route_info.update({ :action => action })
+        @route_info.update  :action => action  
         
         if ! id.nil?
           param_name = class_name.to_s.singularize+'_id'
            
-          @route_info[:params].update({ :id => id, param_name.to_sym => id })
+          @route_info[:params].update  :id => id, param_name.to_sym => id  
                
         else
           @route_info[:params].delete(:id)

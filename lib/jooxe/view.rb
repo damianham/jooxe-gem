@@ -10,7 +10,7 @@ module Jooxe
     # include the path helper
     include Jooxe::Path
     
-    attr_accessor :context, :env
+    attr_accessor :context, :env, :content
     
     def initialize(env,binding_context = nil,options = {})
       @env = env
@@ -22,6 +22,7 @@ module Jooxe
       @context.instance_variables.each do |name|
         self.instance_variable_set(name, @context.instance_variable_get(name))
       end
+      @content = {}
     end
     
     def render_path(filename)
@@ -51,6 +52,8 @@ module Jooxe
     
     def render(options = {})
       
+      #options.merge!(@options)
+      
       if @current_template_folder.nil?
         if options[:model_class_name]
           @current_template_folder = File.join(@env['JOOXE_ROOT'],"app","views",options[:model_class_name].downcase)
@@ -58,17 +61,17 @@ module Jooxe
           @current_template_folder = File.join(@env['JOOXE_ROOT'],"app","views")
         end
       end
-      
-      if options[:json]
+
+      if options.has_key?(:json)
         return JSON.generate(options[:json])
       end
             
-      if options[:partial]
+      if options.has_key?(:partial)
         template_file = resolve_partial options
       else
         template_file = template_for_requested_format options
       end
-      
+
       render_template(template_file,options)
     end
     
@@ -82,6 +85,10 @@ module Jooxe
     
     def instance
       @options[:instance]
+    end
+    
+    def action
+      @options[:action]
     end
     
     private
@@ -158,8 +165,16 @@ module Jooxe
       layout_file = get_layout_template(layout)
       
       template = Tilt.new(layout_file)
-      template.render( self, options[:locals]) {
-        render_template_raw(template_file,options)
+      template.render( self, options[:locals]) { |sym|
+        
+        @content[:layout] ||= render_template_raw(template_file,options)
+        
+        if sym.nil? || sym == :layout
+          content = @content[:layout]
+        else
+          content = @content[sym]
+        end
+        content
       }
     end
     
@@ -225,7 +240,7 @@ module Jooxe
       # use the generic collection or instance template
       if template_file.nil?
         requested_formats.each { |format|
-          template_type = options[:collection].nil? ? 'instance' : 'collection'
+          template_type = @options[:collection].nil? ? 'instance' : 'collection'
           # unless we have already found a requested template type
           if template_file.nil? 
             files = File.join(@env['JOOXE_ROOT'],"app","templates", "generic",  "#{template_type}.#{format}.*")
@@ -236,6 +251,10 @@ module Jooxe
       end
       raise "template for #{options[:model_class_name].downcase}::#{options[:action].downcase} not found" unless template_file
       template_file
+    end
+    
+    def content_for sym, &block
+      @content[sym] = block.call
     end
     
     def method_missing(meth, *args, &block)

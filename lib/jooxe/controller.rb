@@ -16,9 +16,7 @@ module Jooxe
     
     # Get and render a collection of all instance of the model class 
     def list
-      
-      @collection = model.list  :rows => params[:rows] || 100, :page => params[:page] || 0
-      
+      @collection = model.list  :rows => params['rows'].nil? ? 100 : params['rows'].to_i, :page => params['page'].nil? ? 0 : params['page'].to_i
       render  :collection => @collection
     end
     

@@ -14,7 +14,7 @@ module Jooxe
     class << self
       attr_accessor :tablename
       attr_accessor :adapter_type
-      attr_accessor :columns  
+      attr_accessor :column_schema  
       attr_accessor :adapter
     end
     
@@ -99,7 +99,19 @@ module Jooxe
     end
     
     def self.columns
-      @columns ||= adapter.schema
+      
+      @column_schema ||= lambda { |table|
+ 
+        # if the database schema has been generated then use that
+        if $dbs.has_key?('default')
+          database = $dbs['default']
+
+          if database.has_key?(table)
+            return database[table]['columns']
+          end
+        end
+
+      }.call(self.tablename) || adapter.schema
     end
     
     def columns
@@ -112,7 +124,7 @@ module Jooxe
       
       if columns.is_a?(Hash)
         # column hash is keyed by column name
-        columns.has_key?(attr_name)
+        columns.has_key?(attr_name) || columns.has_key?(attr_name.to_s)
       elsif columns.is_a?(Array)
         # column name is first element in each item
         columns.count{|item|item[0].to_s == attr_name.to_s} > 0

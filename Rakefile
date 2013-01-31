@@ -69,15 +69,15 @@ file "ChangeLog" => '.git/index' do
 end
 
 desc "Run all the unit + spec tests"
-task :test => %w[spec SPEC] 
+task :test => %w[spec] 
 
 desc "Run all the tests we run on CI"
 task :ci => :test
 
 desc "Run all the tests"
-task :fulltest => %w[spec SPEC chmod] 
+task :fulltest => %w[spec chmod] 
 
-task :gem => ["SPEC"] do
+task :gem  do
   sh "gem build jooxe.gemspec"
 end
 

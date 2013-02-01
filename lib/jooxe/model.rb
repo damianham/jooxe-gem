@@ -119,16 +119,10 @@ module Jooxe
     def columns
       self.class.columns
     end
-#    
-#    def self.fields= fields_hash
-#      #puts "in model defining fields for " + self.inspect
-#      
-#      @display_fields = fields_hash
-#      #puts "in model fields == " + @display_fields.inspect
-#    end
     
     # get the list of fields to display in the given context
-    # default context is :view, others are :table, :form, :list 
+    # default context is :view, others could be :table, :form, :list 
+    # or any specific context such as an action
     def self.fields_for_context(context = nil)
       @fields[context] || @fields[:view]
     end

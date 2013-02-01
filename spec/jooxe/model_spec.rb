@@ -96,10 +96,23 @@ module Jooxe
     end
     
     it "should get the table display fields" do
-      fields = User.fields(:table)
+      fields = User.fields_for_context(:table)
       fields.size.should eq(3)
       fields.should include :account_name
-      
+    end
+    
+    it "should set and get the view display fields" do
+      User.fields = {:view => [:title,:country,:mail,:surname]}
+      fields = User.fields_for_context(:view)
+      fields.size.should eq(4)
+      fields.should include :mail
+    end
+    
+    it "should get the view display fields when no context given" do
+      User.fields = {:view => [:title,:country,:mail,:surname]}
+      fields = User.fields_for_context
+      fields.size.should eq(4)
+      fields.should include :country
     end
     
   end

@@ -16,6 +16,7 @@ module Jooxe
       attr_accessor :adapter_type
       attr_accessor :column_schema  
       attr_accessor :adapter
+      attr_accessor :fields
     end
     
     attr_writer :env
@@ -24,6 +25,7 @@ module Jooxe
     def self.inherited(subclass)
       subclass.tablename = subclass.name.demodulize.tableize
       subclass.adapter = adapter_for_class(subclass)
+      subclass.fields = {}
     end
     
     def initialize values = nil
@@ -116,6 +118,19 @@ module Jooxe
     
     def columns
       self.class.columns
+    end
+#    
+#    def self.fields= fields_hash
+#      #puts "in model defining fields for " + self.inspect
+#      
+#      @display_fields = fields_hash
+#      #puts "in model fields == " + @display_fields.inspect
+#    end
+    
+    # get the list of fields to display in the given context
+    # default context is :view, others are :table, :form, :list 
+    def self.fields_for_context(context = nil)
+      @fields[context] || @fields[:view]
     end
     
     private

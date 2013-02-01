@@ -14,29 +14,29 @@ module Jooxe
     end
     
     it "should return the ID for to_param" do
-      model = Jooxe::User.new(:id => 17)
+      model = User.new(:id => 17)
       model.to_param.should eq("17")
     end
     
     it "should return a list of users" do
-      users = Jooxe::User.list
+      users = User.list
       users.size.should be > 3
     end
     
     it "should return a page of users" do
-      users = Jooxe::User.list :page => 0,:rows => 2
+      users = User.list :page => 0,:rows => 2
       users.size.should eq(2)
     end
     
     it "should get all users" do
-      users = Jooxe::User.all
+      users = User.all
       users.size.should be > 3
     end
   
     
     it "should create a new user" do
-    users = Jooxe::User.list
-      user = Jooxe::User.create :account_name => 'jim',
+    users = User.list
+      user = User.create :account_name => 'jim',
   :title => 'Mr', 
   :given_name => 'john',
   :surname => 'ldfkjsld',
@@ -50,15 +50,15 @@ module Jooxe
     end
     
     it "should get a single user" do
-      user = Jooxe::User.get :id => 4
+      user = User.get :id => 4
       user.should be_an_instance_of(User)
       user.id.should eq(4)
     end
 
     it "should update a user" do
-      users = Jooxe::User.list
+      users = User.list
 
-      user = Jooxe::User.get :id => users.last.id
+      user = User.get :id => users.last.id
       user.should be_an_instance_of(User)
       user.id.should eq(users.last.id)
       
@@ -69,29 +69,36 @@ module Jooxe
     end
     
     it "should delete a user" do
-      users = Jooxe::User.list
+      users = User.list
 
-      user = Jooxe::User.get :id => users.last.id
+      user = User.get :id => users.last.id
       user.should be_an_instance_of(User)
 
       user.delete
-      newusers = Jooxe::User.list
+      newusers = User.list
 
       newusers.size.should eq(users.size() -1)
     end
     
     it "should generate json data for a single instance" do
-      users = Jooxe::User.list
+      users = User.list
       user = users[0]
       
       user.to_json.should match( /"surname":"#{user.surname}"/ )
     end
     
     it "should generate json data for a collection" do
-      users = Jooxe::User.list
+      users = User.list
       user = users[0]
 
       users.to_json.should match(/surname":"#{user.surname}/)
+      
+    end
+    
+    it "should get the table display fields" do
+      fields = User.fields(:table)
+      fields.size.should eq(3)
+      fields.should include :account_name
       
     end
     

@@ -274,7 +274,7 @@ module Jooxe
     # render list action with layout
     it "should render a collection with class template in layout" do
       
-      users = Jooxe::User.list
+      users = User.list
       
        options = {:layout => 'application', :model_class_name => 'User',
          :action => 'list', :collection => users}
@@ -298,7 +298,7 @@ module Jooxe
     # render list action with layout
     it "should render a collection with generic template in layout" do
       
-      posts = Jooxe::Post.list
+      posts = Post.list
       
        options = {:layout => 'application', :model_class_name => 'Post',
          :action => 'list', :collection => posts}
@@ -351,7 +351,7 @@ module Jooxe
     # render as json without layout
     it "should render a collection in json without layout" do
       
-      posts = Jooxe::Post.list
+      posts = Post.list
       
        options = {:layout => nil, :json => posts}
       

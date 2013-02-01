@@ -3,15 +3,17 @@ require 'rack'
 
 module Jooxe
   
-  describe Controller do
+  describe Jooxe::Controller do
     
     before(:all) do
       $dbs = nil
+      # load a specific base controller
+      Jooxe::Loader.load_controllers 'test/app/controllers/application*.rb'
       Jooxe::Loader.load_databases 'test/db/plural*.yml'
     end
     
     before(:each) do
-      @router = Router.new 
+      @router = Jooxe::Router.new 
       @env = Hash.new(
  
         # setup some basic values in the env hash

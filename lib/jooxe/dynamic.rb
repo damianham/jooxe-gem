@@ -64,13 +64,13 @@ module Jooxe
     def DynamicClassCreator.define_controller(name)
       class_name = name.to_controller_name
     
-      Jooxe.module_eval "class #{class_name} < Jooxe::Controller; end" 
+      Object.module_eval "class #{class_name} < ApplicationController; end" 
     end
     
     def DynamicClassCreator.define_model(name,table_name)
       class_name = name.to_model_name
-       
-      Jooxe::module_eval "class #{class_name} < Jooxe::Model; end;" 
+        
+      Object.module_eval "class #{class_name} < Jooxe::Model; end;"
       
     end
     
@@ -79,7 +79,7 @@ module Jooxe
       
       self.define_controller(name)
       
-      Jooxe::module_eval "new_class = #{name.to_controller_name}.new"
+      Object.module_eval "new_class = #{name.to_controller_name}.new"
  
     end
     
@@ -87,7 +87,7 @@ module Jooxe
       
       self.define_model(name,table_name)
       
-      Jooxe::module_eval "new_class = #{name.to_model_name}.new"
+      Object.module_eval "new_class = #{name.to_model_name}.new"
 
     end
     

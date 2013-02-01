@@ -20,27 +20,27 @@ module Jooxe
     end
     
     it "should generate /users/index when using action index with a class of User" do
-      path = path_for_action(Jooxe::User, :index)
+      path = path_for_action(User, :index)
       path.should eq('/users/index')
     end
     
     it "should generate /users when action is nil with a class of User" do
-      path = path_for_action(Jooxe::User)
+      path = path_for_action(User)
       path.should eq('/users')
     end
     
     it "should generate /user/:id when action is show with an instance of User" do
-      path = path_for_action(Jooxe::User.new(:id => 1),:show)
+      path = path_for_action(User.new(:id => 1),:show)
       path.should eq('/user/1/show')
     end
     
     it "should generate /user/:id when action is nil with an instance of User" do
-      path = path_for_action(Jooxe::User.new(:id => 1))
+      path = path_for_action(User.new(:id => 1))
       path.should eq('/user/1')
     end
     
     it "should generate /user/:id/edit when action is edit with an instance of User" do
-      path = path_for_action(Jooxe::User.new(:id => 1),:edit)
+      path = path_for_action(User.new(:id => 1),:edit)
       path.should eq('/user/1/edit')
     end
     

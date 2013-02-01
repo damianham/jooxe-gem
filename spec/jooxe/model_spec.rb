@@ -115,5 +115,28 @@ module Jooxe
       fields.should include :country
     end
     
+    it "should get the table display fields for an instance" do
+      User.fields = {:view => [:title,:country,:mail,:surname],:table => [:account_name,:given_name,:surname]}
+
+      fields = User.new.fields_for_context(:table)
+
+      fields.size.should eq(3)
+      fields.should include :account_name
+    end
+    
+    it "should set and get the view display fields for an instance" do
+      User.fields = {:view => [:title,:country,:mail,:surname],:table => [:account_name,:given_name,:surname]}
+      fields = User.new.fields_for_context(:view)
+      fields.size.should eq(4)
+      fields.should include :mail
+    end
+    
+    it "should get the view display fields for an instance when no context given" do
+      User.fields = {:view => [:title,:country,:mail,:surname],:table => [:account_name,:given_name,:surname]}
+      fields = User.new.fields_for_context
+      fields.size.should eq(4)
+      fields.should include :country
+    end
+    
   end
 end

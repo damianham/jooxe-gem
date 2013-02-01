@@ -24,7 +24,11 @@ module Jooxe
 
       # load controllers and models
       Jooxe::Loader.load_models
-    
+      
+      # load a specific base controller
+      Jooxe::Loader.load_controllers 'app/controllers/application*.rb'
+      
+      # load controllers
       Jooxe::Loader.load_controllers 
   
       # load the database schema definitions

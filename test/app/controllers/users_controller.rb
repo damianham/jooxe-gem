@@ -1,3 +1,3 @@
-class UsersController < Jooxe::Controller
+class UsersController < ApplicationController
   
 end

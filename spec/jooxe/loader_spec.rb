@@ -9,6 +9,9 @@ describe Jooxe::Loader do
   end
   
   it "should load controllers from app/controllers" do
+    # load a specific base controller
+    Jooxe::Loader.load_controllers 'test/app/controllers/application*.rb'
+      
     Jooxe::Loader.load_controllers('test/app/controllers/*.rb')
     expect { eval "new_class = UsersController.new"}.not_to raise_error(NameError,"uninitialized constant  UsersController")
     expect { eval "new_class = DummydumdumsController.new"}.to raise_error(NameError,"uninitialized constant DummydumdumsController")

@@ -21,12 +21,12 @@ module Jooxe
     def initialize
     
       @router = Jooxe::Router.new
-
-      # load controllers and models
-      Jooxe::Loader.load_models
       
       # load a specific base controller
       Jooxe::Loader.load_controllers 'app/controllers/application*.rb'
+
+      # load controllers and models
+      Jooxe::Loader.load_models
       
       # load controllers
       Jooxe::Loader.load_controllers 

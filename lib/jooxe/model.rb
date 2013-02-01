@@ -124,7 +124,11 @@ module Jooxe
     # default context is :view, others could be :table, :form, :list 
     # or any specific context such as an action
     def self.fields_for_context(context = nil)
-      @fields[context] || @fields[:view]
+      self.fields[context] || self.fields[:view]
+    end
+    
+    def fields_for_context(context = nil)
+      self.class.fields_for_context context
     end
     
     private

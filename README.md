@@ -60,7 +60,7 @@ create/edit form, well that's the plan anyway.
 Furthermore.....
 
 Given that the foreign key constraints imply that a value must belong to a range of values from another table
-the form views can create an auto complete field or drop down menu using a title from the other table.  E.g
+the form views should be able to create an auto complete field or drop down menu using a title from the other table.  E.g
 
     create table manager (
         id int not null auto_increment primary key,
@@ -81,9 +81,7 @@ manager using the name field from the managers table as the title of the drop do
 or auto complete data.  Whether it is a drop down menu or an auto complete field depends
 on the number of managers.  Based on a per class configurable limit if there are less than 
 the limit (e.g less than 100 managers) you get a drop down - otherwise it is an auto complete
-for you Jimmy.
-
-OK let's talk about pluralization and singularization. 
+for you Jimmy. 
 
 Controller names are plural, model names are singular, table names can be either.
 
@@ -116,20 +114,38 @@ See the example Jooxe web app at http://github.com/damianham/jooxe_webapp to get
 
 ## Installation
 
+Clone the repository from github
+
+    git clone git@github.com:damianham/jooxe.git
+
 Add this line to your application's Gemfile:
 
-    gem 'jooxe'
+    gem 'jooxe', :path => '../jooxe'
 
 And then execute:
 
-    $ bundle
+    $ bundle install
 
-Or install it yourself as:
-
-    $ gem install jooxe
+Make sure you pull from the Jooxe repository on a regular basis to get the latest updates
 
 ## Contributing
 
+At this point it is very rough around the edges and there are many things still to do.
+A brief list would include
+
+- Validations
+- Life cycle hooks, something along the lines of before(:all), before(:each), before(:save), after(:each), after(:save) would be nice
+- Storage adapters for noSQL database engines (mongo, riak couchbase etc.)
+
+Also service delegates for
+- Caching  (file, sequel,network, redis and on the java platform java data grid e.g. infinispan)
+- Sessions (file, sequel, network, cache)
+- Authentication and Authorisation
+- Attachments (file, sequel, network, S3)
+- Searching (sphinx, solr, lucene,hadoop etc.)
+
+## Get involved
+0. Join the mailing list at http://groups.google.com/group/rubyonrails-talk and post a suggestion for improvement
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)

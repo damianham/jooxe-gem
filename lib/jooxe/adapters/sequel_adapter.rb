@@ -144,19 +144,28 @@ module Jooxe
     def related options
       
       belongs_to_field = options[:relation].to_s.foreign_key 
-      table = DB.from(options[:relation].tableize)
-
-      instance = get options
+      table = options[:tablename].nil? ? DB.from(options[:relation].tableize) : DB.from(options[:tablename]) 
+      relation_class = options[:relation].to_model_name.constantize
+        
+      columns = @model_class.columns
       
-      if instance.has_key?(belongs_to_field)        
-        result = table.where(:id => instance[belongs_to_field])
+      instance = options[:instance] || get(options)
+      
+      if columns.has_key?(belongs_to_field)
+        parent_id = instance.send(belongs_to_field.to_sym)
+        #puts "instance belongs to #{relation_class} with id #{parent_id}" + instance.inspect
+        # this instance belongs to record from another table        
+        result = table.where(:id => parent_id)
       else
-        column_name = @table.singularize.foreign_key
-        result = table.where(column_name => options[:id])
+        # this instance has one or more records from another table
+        column_name = @table.singularize.foreign_key   # this table name as foreign key
+        
+        #puts "has one or more with column #{column_name} =  #{options[:id]} from " + table.inspect
+        result = table.where(column_name.to_sym => options[:id])
       end
       
       # convert the array of hashes to an array of model objects
-      result.all.map{|row| @model_class.new row}
+      result.all.map{|row| relation_class.new row}
     end
   
     # get the set of records from another class that are related to the

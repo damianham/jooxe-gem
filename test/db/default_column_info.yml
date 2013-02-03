@@ -18,6 +18,14 @@ schema:
         character_maximum_length: 255
         numeric_precision: 
         column_comment: The title of the post
+      user_id:
+        column_name: id
+        ordinal_position: 3
+        data_type: int
+        is_nullable: 'NO'
+        character_maximum_length: 
+        numeric_precision: 10
+        column_comment: ''
       updated_at:
         column_name: updated_at
         ordinal_position: 6
@@ -57,6 +65,14 @@ schema:
         character_maximum_length: 255
         numeric_precision: 
         column_comment: the comment body
+      post_id:
+        column_name: id
+        ordinal_position: 3
+        data_type: int
+        is_nullable: 'NO'
+        character_maximum_length: 
+        numeric_precision: 10
+        column_comment: ''
       updated_at:
         column_name: updated_at
         ordinal_position: 6

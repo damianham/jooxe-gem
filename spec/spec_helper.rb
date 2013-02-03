@@ -39,6 +39,7 @@ end
 DB.create_table :posts do
   primary_key :id
   String :title
+  Integer :user_id
   DateTime :updated_at
   String :updated_by
 end

@@ -151,7 +151,13 @@ module Jooxe
     end
     
     it "should return related records" do
-      fail "not implemented"
+      user = User.get :id => 1
+      posts = Post.list
+      
+      posts = posts.map{|x| x.user_id == 1 ? x : nil}.compact
+      
+      related = user.related :relation => 'post'
+      related.size.should eq(posts.size)
     end
     
     it "should return bridged records" do

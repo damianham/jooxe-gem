@@ -140,7 +140,7 @@ module Jooxe
     # id of the instance
     # one to many, or many to one, or one to one relationship
     def related options
-      adapter.related options     
+      adapter.related options.merge :id => self.id, :instance => self     
     end
   
     # get the set of records from another class that are related to the

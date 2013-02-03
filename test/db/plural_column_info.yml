@@ -86,7 +86,7 @@ schema:
         is_nullable: 'NO'
         character_maximum_length: 
         numeric_precision: 10
-        column_comment: ''
+        column_comment: from plural
       mail:
         column_name: mail
         ordinal_position: 5
@@ -126,7 +126,15 @@ schema:
         is_nullable: 'YES'
         character_maximum_length: 64
         numeric_precision: 
-        column_comment: The surname of the user 
+        column_comment: The surname of the user from plural
+      name:
+        column_name: name
+        ordinal_position: 10
+        data_type: varchar
+        is_nullable: 'YES'
+        character_maximum_length: 64
+        numeric_precision: 
+        column_comment: The full name of the user
       country:
         column_name: country
         ordinal_position: 14

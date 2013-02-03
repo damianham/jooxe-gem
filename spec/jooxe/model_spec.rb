@@ -5,7 +5,7 @@ module Jooxe
   describe Model do
     before(:all) do
       $dbs = nil
-      Jooxe::Loader.load_databases 'test/db/*.yml'
+      Jooxe::Loader.load_databases 'test/db/default*.yml'
     end
     
     before(:each) do
@@ -41,6 +41,7 @@ module Jooxe
   :given_name => 'john',
   :surname => 'ldfkjsld',
   :country => 'GB',
+  :name => 'Mr John ldfkjsld',
   :mail => 'john@example.com',
   :updated_at => '2012-12-21 23:59:59',
   :updated_by => 'admin' 
@@ -138,5 +139,23 @@ module Jooxe
       fields.should include :country
     end
     
+    it "should return a range as an array of tuples" do
+      users = User.list
+      range = User.range
+
+      # remove all users without a value in name - they will not appear in the range
+      users = users.map{|item| item.name.nil? ? nil : item}.compact
+      
+      range.size.should eq (users.size)
+      range[0][0].should eq(users[0].id)
+    end
+    
+    it "should return related records" do
+      fail "not implemented"
+    end
+    
+    it "should return bridged records" do
+      fail "not implemented"
+    end
   end
 end

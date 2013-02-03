@@ -131,6 +131,33 @@ module Jooxe
       self.class.fields_for_context context
     end
     
+     # get the set of records from another class that are related to the
+    # given instance giving the name of the related class
+    # input => {:relation => "location", :id => 123}
+    # if the record instance contains a 'location_id' field use that to
+    # find the record the instance belongs to otherwise get the set of
+    # records from the relation that have a foreign key matching the 
+    # id of the instance
+    # one to many, or many to one, or one to one relationship
+    def related options
+      adapter.related options     
+    end
+  
+    # get the set of records from another class that are related to the
+    # given instance through a bridging class i.e. many to many relationship
+    # User -> UserGroups -> Group
+    # options => {:relation => "group", :id => 123, :through => 'user_group'}
+    # Group.where(:id => UserGroup.select(:group_id).where(:user_id => 123))
+    def bridged options
+      adapter.bridged options
+    end
+  
+    # get an array of entries that each contain the table ID and a 
+    # human readable identifier (a title or name)
+    def self.range
+      adapter.range
+    end
+    
     private
       
     def is_a_known_attribute?(attr_name)
@@ -166,7 +193,6 @@ module Jooxe
       # if this is an attribute setter then set the attribute value in the values hash
       if meth.to_s =~ /^(.+)=$/
         if is_a_known_attribute? $1
-          # @values hash is defined as an instance variable in Sequel::Model
           @values.update($1 => args[0])
           define_setter($1)
           return

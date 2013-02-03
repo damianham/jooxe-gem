@@ -28,6 +28,7 @@ DB.create_table :users do
   String :title
   String :given_name
   String :surname
+  String :name
   String :country
   String :mail
   DateTime :updated_at

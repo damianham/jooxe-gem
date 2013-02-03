@@ -2,9 +2,10 @@
 one:
   id: 1
   account_name: jim
-  title: 
+  title: Mr
   given_name: jim
   surname: ldfkjsld
+  name: James T Kirk
   country: GB
   mail: jim@example.com
   updated_at: 2012-12-21 23:59:59
@@ -16,6 +17,7 @@ two:
   title:
   given_name: jane
   surname: ldfkjsld
+  name: Dr Spock
   country: GB
   mail: jane@example.com
   updated_at: 2012-12-21 23:59:59
@@ -27,6 +29,7 @@ three:
   title:
   given_name: bob
   surname: ldfkjsld
+  name: Captain Blackbeard
   country: GB
   mail: bob@example.com
   updated_at: 2012-12-21 23:59:59

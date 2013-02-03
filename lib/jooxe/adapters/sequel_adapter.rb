@@ -197,8 +197,15 @@ module Jooxe
     
     def get_range
       table = DB.from(@table)
+
       # get an array of arrays [id,'title']
-      table.all.map{|item| [item.id,name_or_title[item]]}
+      if @model_class.public_methods(false).include?(:to_range) 
+        table.all.map{|item| item.to_range }.compact
+      else
+        table.all.map{|item| title = item[:name] || item[:title]
+          title.nil? ? nil : [item[:id], title ]}.compact
+      end
+      
     end
     
     def method_missing(meth, *args, &block)

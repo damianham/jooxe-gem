@@ -162,10 +162,6 @@ module Jooxe
     
     it "should return bridged records" do
       user = User.get :id => 1
-      list = Comment.list
-      uc = UserComment.list
-      #puts "comments == " + list.inspect
-      #puts "user_comments == " + uc.inspect
       
       comments = user.bridged :relation => 'comment', :through => 'user_comment'
       

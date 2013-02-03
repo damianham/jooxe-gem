@@ -19,7 +19,7 @@ schema:
         numeric_precision: 
         column_comment: The title of the post
       user_id:
-        column_name: id
+        column_name: user_id
         ordinal_position: 3
         data_type: int
         is_nullable: 'NO'
@@ -66,7 +66,7 @@ schema:
         numeric_precision: 
         column_comment: the comment body
       post_id:
-        column_name: id
+        column_name: post_id
         ordinal_position: 3
         data_type: int
         is_nullable: 'NO'
@@ -178,4 +178,51 @@ schema:
     has_many:
     - - post
     belongs_to: []
+    comment: User records
+  user_comment:
+    columns:
+      id:
+        column_name: id
+        ordinal_position: 1
+        data_type: int
+        is_nullable: 'NO'
+        character_maximum_length: 
+        numeric_precision: 10
+        column_comment: ''
+      user_id:
+        column_name: user_id
+        ordinal_position: 2
+        data_type: int
+        is_nullable: 'NO'
+        character_maximum_length: 
+        numeric_precision: 10
+        column_comment: ''
+      comment_id:
+        column_name: comment_id
+        ordinal_position: 3
+        data_type: int
+        is_nullable: 'NO'
+        character_maximum_length: 
+        numeric_precision: 10
+        column_comment: ''
+      updated_at:
+        column_name: updated_at
+        ordinal_position: 54
+        data_type: timestamp
+        is_nullable: 'NO'
+        character_maximum_length: 
+        numeric_precision: 
+        column_comment: ''
+      updated_by:
+        column_name: updated_by
+        ordinal_position: 55
+        data_type: varchar
+        is_nullable: 'NO'
+        character_maximum_length: 255
+        numeric_precision: 
+        column_comment: ''
+    has_many: []
+    belongs_to: 
+    - - post
+    - - user
     comment: User records 

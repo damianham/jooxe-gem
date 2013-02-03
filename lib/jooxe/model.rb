@@ -149,7 +149,7 @@ module Jooxe
     # options => {:relation => "group", :id => 123, :through => 'user_group'}
     # Group.where(:id => UserGroup.select(:group_id).where(:user_id => 123))
     def bridged options
-      adapter.bridged options
+      adapter.bridged options.merge :id => self.id, :instance => self
     end
   
     # get an array of entries that each contain the table ID and a 

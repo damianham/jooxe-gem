@@ -116,19 +116,19 @@ module Jooxe
     # being arrays of length 2, the first member being the column name, 
     # and the second member being a hash of column information.
     # [[:id,
-#   {:type=>:integer,
-#    :primary_key=>true,
-#    :default=>"nextval('artist_id_seq'::regclass)",
-#    :ruby_default=>nil,
-#    :db_type=>"integer",
-#    :allow_null=>false}],
-#  [:name,
-#   {:type=>:string,
-#    :primary_key=>false,
-#    :default=>nil,
-#    :ruby_default=>nil,
-#    :db_type=>"text",
-#    :allow_null=>false}]]
+    #   {:type=>:integer,
+    #    :primary_key=>true,
+    #    :default=>"nextval('artist_id_seq'::regclass)",
+    #    :ruby_default=>nil,
+    #    :db_type=>"integer",
+    #    :allow_null=>false}],
+    #  [:name,
+    #   {:type=>:string,
+    #    :primary_key=>false,
+    #    :default=>nil,
+    #    :ruby_default=>nil,
+    #    :db_type=>"text",
+    #    :allow_null=>false}]]
     def schema
       @cached_schema ||= DB.schema(@table)
     end
@@ -167,20 +167,54 @@ module Jooxe
       # convert the array of hashes to an array of model objects
       result.all.map{|row| relation_class.new row}
     end
-  
+
+    # get the set of records from another class that are related to the
+    # given instance through a bridging class i.e. many to many relationship
+    # User -> UserGroups -> Group
+    # options => {:relation => "group", :id => 123, :through => 'user_group'}
+    # Group.where(:id => UserGroup.select(:group_id).where(:user_id => 123))
+    # this version does not work with the SQlite3 database engine
+    def bridged_through options
+      table = options[:tablename].nil? ? DB.from(options[:relation].tableize) : DB.from(options[:tablename])
+      through = options[:through_tablename].nil? ? DB.from(options[:through].tableize) : DB.from(options[:through_tablename])
+      
+      self_column_name = @table.singularize.foreign_key
+      through_column_name = options[:relation].foreign_key
+      
+      through = through.select(through_column_name).where(self_column_name => options[:id])
+      
+      ids = through.all
+ 
+      ids = ids.map{|x| x[through_column_name.to_sym]}
+      
+      result = table.where(:id => ids   )
+      
+      target_model_class = options[:relation].to_model_name.constantize
+      # convert the array of hashes into objects of the target relation
+      result.all.map{|row| target_model_class.new row}
+    end
+
+    
     # get the set of records from another class that are related to the
     # given instance through a bridging class i.e. many to many relationship
     # User -> UserGroups -> Group
     # options => {:relation => "group", :id => 123, :through => 'user_group'}
     # Group.where(:id => UserGroup.select(:group_id).where(:user_id => 123))
     def bridged options
-      table = DB.from(options[:relation].tableize)
-      through = DB.from(options[:through].tableize)
+      table = options[:tablename].nil? ? DB.from(options[:relation].tableize) : DB.from(options[:tablename])
+      
       self_column_name = @table.singularize.foreign_key
       through_column_name = options[:relation].foreign_key
+      through_table_name = options[:through_tablename].nil? ? options[:through].tableize : options[:through_tablename]
+
+      ids = []
+      DB.fetch("SELECT #{through_column_name} FROM #{through_table_name} where (#{self_column_name} = ?)", options[:id]) do |row|
+        ids << row[through_column_name.to_sym]
+      end
       
-      result = table.where(:id => through.select(through_column_name).where(self_column_name => options[:id]))
-      target_model_class = options[:relation].to_model_name
+      result = table.where(:id => ids )
+      
+      target_model_class = options[:relation].to_model_name.constantize
       # convert the array of hashes into objects of the target relation
       result.all.map{|row| target_model_class.new row}
     end

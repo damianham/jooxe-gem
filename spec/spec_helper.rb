@@ -9,7 +9,7 @@ ENV.each_pair do |k,v|
 end
 
 if ENV['RUBY_VERSION'] =~ /^jruby/
-    # connect to an in-memory database
+  # connect to an in-memory database
   DB = Sequel.connect('jdbc:sqlite::memory:')
 else
   DB = Sequel.sqlite
@@ -35,11 +35,29 @@ DB.create_table :users do
   String :updated_by
 end
 
-# create a users table
+# create a posts table
 DB.create_table :posts do
   primary_key :id
   String :title
   Integer :user_id
+  DateTime :updated_at
+  String :updated_by
+end
+
+# create a comments table
+DB.create_table :comments do
+  primary_key :id
+  String :body
+  Integer :post_id
+  DateTime :updated_at
+  String :updated_by
+end
+
+# create a bridging relationship table from users to comments
+DB.create_table :user_comments do
+  primary_key :id
+  Integer :user_id
+  Integer :comment_id
   DateTime :updated_at
   String :updated_by
 end
@@ -50,24 +68,17 @@ DB.create_table :application_configs do
   String :config_value
 end
 
-# create a dataset from the items table
-users = DB[:users]
+# insert the fixtures
+['users','posts','comments','user_comments'].each do |tname|
+  table = DB[tname.to_sym]
+  # load the fixture with yaml
+  db = YAML::load( File.open( "test/db/fixtures/#{tname}.yml" ) )
 
-# load the fixture with yaml
-db = YAML::load( File.open( 'test/db/fixtures/users.yml' ) )
+  # populate the table
+  db.values.each do |v| 
+    table.insert(v)
+  end
 
-# populate the table
-db.values.each do |v| 
-  users.insert(v)
-end
-
-posts = DB[:posts]
-# load the fixture with yaml
-db = YAML::load( File.open( 'test/db/fixtures/posts.yml' ) )
-
-# populate the table
-db.values.each do |v| 
-  posts.insert(v)
 end
 
 

@@ -161,7 +161,18 @@ module Jooxe
     end
     
     it "should return bridged records" do
-      fail "not implemented"
+      user = User.get :id => 1
+      list = Comment.list
+      uc = UserComment.list
+      #puts "comments == " + list.inspect
+      #puts "user_comments == " + uc.inspect
+      
+      comments = user.bridged :relation => 'comment', :through => 'user_comment'
+      
+      comments.size.should eq(3)
+      comments[0].post_id.should eq(1)
+      comments[1].post_id.should eq(1)
+      comments[2].post_id.should eq(2)
     end
   end
 end

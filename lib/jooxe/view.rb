@@ -25,6 +25,9 @@ module Jooxe
       @content = {}
     end
     
+    # render a template from a given filename using one of the request formats
+    # the file should exist in either @env['JOOXE_ROOT']/app/views 
+    # or @env['JOOXE_ROOT']/app/templates.  
     def render_path(filename)
       
       template_file = nil
@@ -50,9 +53,8 @@ module Jooxe
       render_template(template_file,@options)
     end
     
-    def render(options = {})
+    def render(options = @options)
       
-      #options.merge!(@options)
       
       if @current_template_folder.nil?
         if options[:model_class_name]

@@ -136,6 +136,7 @@ A brief list would include
 - Validations
 - Life cycle hooks, something along the lines of before(:all), before(:each), before(:save), after(:each), after(:save) would be nice
 - Storage adapters for noSQL database engines (mongo, riak couchbase etc.)
+- Flash messages
 
 Also service delegates for
 - Caching  (file, sequel,network, redis and on the java platform java data grid e.g. infinispan)

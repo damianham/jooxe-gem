@@ -170,7 +170,7 @@ module Jooxe
       template = Tilt.new(layout_file)
       template.render( self, options[:locals]) { |sym|
         
-        @content[:layout] ||= render_template_raw(template_file,options)
+        @content[:layout] ||= @options[:text] || render_template_raw(template_file,options)
         
         if sym.nil? || sym == :layout
           content = @content[:layout]

@@ -11,7 +11,7 @@ module Jooxe
     attr_writer :env
   
     def index
-      render
+      render :text => model.class.name + ' Index'
     end
     
     # Get and render a collection of all instance of the model class 

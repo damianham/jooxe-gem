@@ -2,13 +2,14 @@
 require 'erubis'
 require 'tilt'
 require 'json/add/core' # load a set of common additions to ruby core's objects
-
+require 'erb'
 
 module Jooxe
   class View
 
     # include the path helper
     include Jooxe::Path
+    include ERB::Util
     
     attr_accessor :context, :env, :content
     

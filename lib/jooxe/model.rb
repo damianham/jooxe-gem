@@ -100,20 +100,24 @@ module Jooxe
       self.class.delete options.merge(:id => self.to_param)
     end
     
-    def self.columns
+    def self.schema
       
-      @column_schema ||= lambda { |table|
+      @table_schema ||= lambda { |table|
  
         # if the database schema has been generated then use that
         if $dbs.has_key?('default')
           database = $dbs['default']
 
           if database.has_key?(table)
-            return database[table]['columns']
+            return database[table]
           end
         end
 
-      }.call(self.tablename) || adapter.schema
+      }.call(self.tablename) 
+    end
+    
+    def self.columns
+      return schema.nil? ? adapter.schema : schema['columns'] 
     end
     
     def columns

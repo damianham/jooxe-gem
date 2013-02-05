@@ -11,7 +11,14 @@ module Jooxe
     attr_writer :env
   
     def index
-      render :text => model.class.name + ' Index'
+      schema = model.class.schema
+      
+      if schema.has_key?("comment")
+        render :text => schema["comment"]
+      else
+        render :text =>  model.class.name + ' Index'
+      end
+      
     end
     
     # Get and render a collection of all instance of the model class 
